@@ -1,25 +1,17 @@
 from tkinter import *
 from gui.backend.calculator.assessment_calculator import AssessmentCalculator
-from gui.backend.loader.excel_loader import ExcelLoader
-from gui.tkinter_utils import reset_main_frame, save_data
+from gui.backend.loader.json_loader import JSONLoader
+from gui.tkinter_utils import save_data
 
 import customtkinter as ctk
 
 
-def load_assessment_onto_frame(self, name):
-    reset_main_frame(self)
-    self.main_frame.grid_forget()
-    load_assessment(self, name)
-    self.main_frame.grid(row=0, column=1, padx=20, pady=20, rowspan=4, sticky="nsew")
-
-
-def load_assessment(self, assessment_name):
-    loader = ExcelLoader()
-    grade_df = loader.load(assessment_name)
+def assessment_view(self, assessment_name):
+    loader = JSONLoader(assessment_name)
+    grade_df = loader.get_assessment_df()
     calculator = AssessmentCalculator(assessment_name)
     grade_df, prop = calculator.calculate(grade_df)
 
-    old_data = record_data(assessment_name, grade_df)
     # Building df frame
     # Setting columns for [Name, K, T, C A, G, %, Total (Weight, KT, CT, CC, AA)]
     self.main_frame.grid_columnconfigure((1, 2, 3, 4, 5, 6, 7, 8), weight=1, uniform="equal")
@@ -34,7 +26,7 @@ def load_assessment(self, assessment_name):
 
     save_button = ctk.CTkButton(self.main_frame, text='Save',
                                 command=(lambda frame=self:
-                                         save_data(frame, old_data, new_data)))
+                                         save_data(frame, assessment_name, new_data)))
 
     save_button.grid(row=0, column=8)
 
@@ -90,7 +82,7 @@ def load_assessment(self, assessment_name):
 
     row_index = 2
     json_new_data = {}
-    new_data["json"] = json_new_data
+    new_data["properties"] = json_new_data
     for text, val in prop.items():
         label = ctk.CTkLabel(self.main_frame, text=text, font=ctk.CTkFont(size=12, weight="bold"))
         label.grid(row=row_index, column=7, padx=20, pady=(20, 10))
@@ -98,13 +90,11 @@ def load_assessment(self, assessment_name):
         string = StringVar(self.main_frame, value=val)
         value = ctk.CTkEntry(self.main_frame, textvariable=string, width=80)
         value.grid(row=row_index, column=8, padx=0, pady=8)
+        if text == "Total":
+            value.configure(state='disable')
 
         json_new_data[text] = string
         row_index += 1
 
 
-def record_data(assessment, grade_df):
-    return {
-        "Assessment": assessment,
-        "df": grade_df,
-    }
+

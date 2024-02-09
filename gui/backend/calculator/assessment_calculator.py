@@ -2,7 +2,7 @@ import json
 
 import pandas as pd
 
-from settings import ASSESSMENTS_PATH
+from settings import ASSESSMENTS_PROPERTIES_PATH
 
 
 class AssessmentCalculator:
@@ -18,7 +18,7 @@ class AssessmentCalculator:
 
     @staticmethod
     def get_properties():
-        path = ASSESSMENTS_PATH
+        path = ASSESSMENTS_PROPERTIES_PATH
         with open(path) as f:
             data = json.load(f)
         return data
@@ -29,23 +29,22 @@ class AssessmentCalculator:
 
     def get_total(self):
         assessment = self._properties[self.name]
-        total = 0
-        total += assessment['Knowledge']
-        total += assessment['Thinking']
-        total += assessment['Communication']
-        total += assessment['Application']
+        total = float(assessment['Knowledge']) if assessment['Knowledge'] is not None else 0
+        total += float(assessment['Thinking']) if assessment['Thinking'] is not None else 0
+        total += float(assessment['Communication']) if assessment['Communication'] is not None else 0
+        total += float(assessment['Application']) if assessment["Application"] is not None else 0
         return total
 
     @staticmethod
     def add_rows(row):
-        grade = row['Knowledge']
-        grade += row['Thinking']
-        grade += row['Communication']
-        grade += row['Application']
+        grade = float(row['Knowledge']) if row['Knowledge'] is not None else 0
+        grade += float(row['Thinking']) if row['Thinking'] is not None else 0
+        grade += float(row['Communication']) if row['Communication'] is not None else 0
+        grade += float(row['Application']) if row["Application"] is not None else 0
         return grade
 
     def get_average(self, grade):
-        average = str(float(grade/self.total) * 100)
+        average = str(float(grade)/self.total * 100)
         if average == 'nan':
             return ''
         return average + '%'

@@ -1,15 +1,22 @@
 import os
 import pandas as pd
 
-import settings
+from gui.backend.objects.assessments.Assessments import Assessments
+from gui.backend.objects.students.course import Course
+from settings import INGESTION_PATH
 
 
 class IngestExcel:
-    @staticmethod
-    def get_data():
-        sheets = []
-        path = settings.MEDIA_PATH
-        filenames = next(os.walk(path), (None, None, []))[2]  # [] if no file
+    def __init__(self):
+        self.path = INGESTION_PATH
+
+    def ingest(self):
+        filenames = next(os.walk(self.path), (None, None, []))[2]  # [] if no file
+        course = Course()
+        assessment = Assessments()
         for file in filenames:
-            sheets.append(pd.read_excel(f'{path}/{file}', sheet_name=None))
-        return sheets
+            df = pd.read_excel(f'{self.path}/{file}')
+            title = file.replace('.xlsx', '')
+            course.validate_students_from_df(df)
+            assessment.validate_assessment_from_excel({"title": title, "df":df})
+

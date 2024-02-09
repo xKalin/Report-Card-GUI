@@ -1,17 +1,37 @@
 {
-  "example_student": {
-    "grade": 0,
-    "comments": "",
-    "assessments": {
-      "Test1": {
-        "knowledge": "1/4",
-        "thinking": "1/4",
-        "communication": "1/4",
-        "application": "1/4",
-        "mark": "0.25",
-        "weight": "None"
-      }
-    }
-  }
+    "example_student": {
+        "grade": 0,
+        "comments": "",
+        "assessments": {
+            "Test1": {
+                "knowledge": "1/4",
+                "thinking": "1/4",
+                "communication": "1/4",
+                "application": "1/4",
+                "mark": "0.25",
+                "weight": "None"
+            }
+        }
+    },
+    "Ariana Ajan": {},
+    "Ayaz Aravinthan": {},
+    "Luke Cai": {},
+    "Katty Chen": {},
+    "Joshua Cheng": {},
+    "Marco Cheung": {},
+    "Martin Cheung": {},
+    "Marcus Chiu": {},
+    "Yixin Dong": {},
+    "Elvin Feng": {},
+    "Candice Lee": {},
+    "Hayley Liang": {},
+    "Aiden Lin": {},
+    "Jolie Liu": {},
+    "Antheia Lu": {},
+    "Alexis Popovitch": {},
+    "Lucas Wang": {},
+    "Jackson Wen": {},
+    "Priscilla Wong": {},
+    "Paris Yi": {},
+    "Priscilla Zhu": {}
 }
-

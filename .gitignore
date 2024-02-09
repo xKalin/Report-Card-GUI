@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+
+
+.mr.developer.cfg
+.project
+.pydevproject
+
+pip-log.txt
+pip-delete-this-directory.txt
+
+lib/
+lib64/

@@ -1,9 +1,17 @@
 {
+    "Test  (5da": {
+        "Knowledge": "4",
+        "Thinking": "4",
+        "Communication": "4",
+        "Application": "4",
+        "Weight": "None"
+    },
     "Test Assessment (5)": {
-        "Knowledge": 4,
-        "Thinking": 4,
-        "Communication": 4,
-        "Application": 4,
+        "Knowledge": "4",
+        "Thinking": "4",
+        "Communication": "4",
+        "Application": "4",
+        "Total": 16.0,
         "Weight": "None"
     }
 }

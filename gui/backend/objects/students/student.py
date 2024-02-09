@@ -1,22 +1,7 @@
 class Students:
-    def __init__(self, name, grade, comment, assessments=[]):
-        self.name = name
-        self.grade = grade
-        self.comment = comment
-        self.assessments = assessments
-
-    def serialize_student(self):
-        return {
-            self.name: {
-                "grade": self.grade,
-                "comment": self.comment,
-                "assessments": self.assessments
-            }
-        }
-
-    def add_assessment(self, assessment):
-        self.assessments.append(assessment)
-
+    def add_students(self, student_dict, df):
+        for index, row in df.iterrows():
+            student_dict[row['Name']] = {}
 
 """
 [
