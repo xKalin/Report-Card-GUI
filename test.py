@@ -1,11 +1,8 @@
-from backend.ingestor.ingest_excel import IngestExcel
-from backend.loader.excel_loader import ExcelLoader
+grade = 1
+total = 4
 
-print('hello')
+average = float(grade / total)
+average =("{:.2f}".format(average)).replace('0.', '') + '%'
 
 
-loader = ExcelLoader()
-
-dfs = loader.load_assessments()
-
-print(dfs)
+print(average)
