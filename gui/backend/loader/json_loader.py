@@ -19,6 +19,8 @@ class JSONLoader:
         df = pd.DataFrame.from_records(assessments)
         return df
 
+    def get_assessment_properties(self):
+        return self.Assessments.assessments_property[self.assessment_name]
     def get_classroom_df(self):
         pass
 

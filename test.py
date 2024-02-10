@@ -4,9 +4,6 @@ total = 4
 average = float(grade / total)
 average =("{:.2f}".format(average)).replace('0.', '') + '%'
 
+KTCA = ["Knowledge", 'Thinking', 'Application', "Communication"]
 
-print(average)
-
-
-list = [1,2,3,4,5]
-print(list[1:])
+print(KTCA[1:])

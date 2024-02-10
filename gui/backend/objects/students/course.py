@@ -15,7 +15,7 @@ class Course:
             data = json.load(f)
         return data
 
-    def validate_students_from_df(self, df):
+    def validate_students_from_excel(self, df):
         student_names = self.students.keys()
         new_students = df[~df['Name'].isin(student_names)]
         self.__enroll(new_students)

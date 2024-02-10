@@ -1,5 +1,6 @@
 import json
 
+from gui.backend.calculator.assessment_calculator import AssessmentCalculator
 from settings import ASSESSMENTS_PATH, ASSESSMENTS_PROPERTIES_PATH
 
 
@@ -9,11 +10,13 @@ class Assessments:
         self._prop_path = ASSESSMENTS_PROPERTIES_PATH
         self.assessments, self.assessments_property = self._from_json()
 
-    def validate_assessment_from_excel(self, data, properties=None):
+    def validate_assessment_from_excel(self, data):
         title = data['title']
-        records = json.loads(data['df'].to_json(orient="records"))
+        self.assessments_property[title] = self.__get_default_properties()
+        df, properties = AssessmentCalculator(data['title'], self.assessments_property[title]).calculate(data['df'])
+        records = json.loads(df.to_json(orient="records"))
         self.assessments[title] = records
-        self.assessments_property[title] = properties if properties else self.__get_default_properties()
+
         self.save_assessments_json()
 
     def validate_assessment_from_data_dict(self, data):
@@ -22,7 +25,6 @@ class Assessments:
         self.assessments[title] = records
         self.assessments_property[title] = data['properties']
         self.save_assessments_json()
-
 
     def save_assessments_json(self):
         with open(self._assessment_path, "w") as f:
@@ -39,6 +41,10 @@ class Assessments:
         with open(self._prop_path) as f:
             properties = json.load(f)
         return assessments, properties
+
+    @staticmethod
+    def get_assessment_columns():
+        return ["Names", "Knowledge", "Thinking", "Communication", "Application", "Grade", "%"]
 
     @staticmethod
     def __get_default_properties():

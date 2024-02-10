@@ -1,7 +1,8 @@
-from gui.backend.objects.assessments.Assessments import Assessments
-from gui.backend.objects.students.course import Course
+from tkinter import StringVar
+
 from gui.assessment_view import assessment_view
-from gui.new_assessment_view import load_new_assessment
+from gui.home_view import home_view
+from gui.new_assessment_view import new_assessment_view
 from gui.tkinter_utils import *
 
 ctk.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
@@ -13,9 +14,6 @@ y = 720
 class GradingApp(ctk.CTk):
     def __init__(self):
         super().__init__()
-
-        self.classroom = Course()
-
         # configure window
         self.title("Evi's Grading App")
         self.geometry(f"{x}x{y}")
@@ -42,17 +40,41 @@ class GradingApp(ctk.CTk):
         self.main_frame.grid(row=0, column=1, padx=20, pady=20, rowspan=4, sticky="nsew")
 
         #
+
     def load_assessment_onto_frame(self, name):
         reset_main_frame(self)
         self.main_frame.grid_forget()
         assessment_view(self, name)
         self.main_frame.grid(row=0, column=1, padx=20, pady=20, rowspan=4, sticky="nsew")
 
-    def new_assessment(self):
-        reset_main_frame(self)
-        self.main_frame.grid_forget()
-        load_new_assessment(self)
-        self.main_frame.grid(row=0, column=1, padx=20, pady=20, rowspan=4, sticky="nsew")
+    def new_assessment_popup(self):
+        popup = ctk.CTkToplevel(self)
+        popup.attributes('-topmost', 'true')
+        popup.geometry(f"{500}x{250}")
+        self.eval(f'tk::PlaceWindow {str(popup)} center')
+        popup.title("New Assessment")
+
+        def close():
+            popup.destroy()
+            popup.update()
+
+        def open_new_assessment_view(val):
+            close()
+            name = val.get()
+            if validate_new_assessment(name):
+                reset_main_frame(self)
+                self.main_frame.grid_forget()
+                new_assessment_view(self, name)
+                self.main_frame.grid(row=0, column=1, padx=20, pady=20, rowspan=4, sticky="nsew")
+            else:
+                self.new_assessment_popup()
+
+        ctk.CTkLabel(popup, text="New Assessment Name?",
+                     font=ctk.CTkFont(size=24, weight="bold")).pack(pady=15)
+        text = StringVar(popup, value="")
+        ctk.CTkEntry(popup, textvariable=text, width=180).pack(pady=15)
+        ctk.CTkButton(popup, text='Submit', command=lambda val=text: open_new_assessment_view(val)).pack()
+        ctk.CTkButton(popup, text='Cancel', command=close).pack(pady=15)
 
     def delete_assessment(self):
         pass
@@ -65,7 +87,7 @@ class GradingApp(ctk.CTk):
 
     def sidebar_init(self):
         # create sidebar frame with widgets
-       
+
         logo_label = ctk.CTkLabel(self.sidebar_frame, text="Menu", font=ctk.CTkFont(size=20, weight="bold"))
         logo_label.grid(row=0, column=0, padx=20, pady=(20, 10))
 
@@ -73,7 +95,7 @@ class GradingApp(ctk.CTk):
         home_button.grid(row=1, column=0, padx=20, pady=5)
 
         new_assignment_button = ctk.CTkButton(self.sidebar_frame, text='New Assessment',
-                                              command=self.new_assessment)
+                                              command=self.new_assessment_popup)
         new_assignment_button.grid(row=2, column=0, padx=20, pady=5)
 
         self.load_assessment_scrollbar()
@@ -98,4 +120,3 @@ class GradingApp(ctk.CTk):
                                               fg_color="transparent", border_width=2, text_color=("gray10", "#DCE4EE"))
             assessment_button.grid(row=i, padx=10, pady=(0, 5))
             i += 1
-

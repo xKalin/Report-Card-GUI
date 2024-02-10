@@ -1,13 +1,13 @@
 {
-    "Test Assessment (5)": [
+    "Test Assessment": [
         {
             "Name": "Ariana Ajan",
-            "Knowledge": "4.0",
+            "Knowledge": "43",
             "Thinking": "4.0",
             "Communication": "4.0",
             "Application": "4.0",
-            "Grade": 16.0,
-            "%": "88.88888888888889%"
+            "Grade": 55.0,
+            "%": "343.75%"
         },
         {
             "Name": "Ayaz Aravinthan",
@@ -16,16 +16,16 @@
             "Communication": "4.0",
             "Application": "4.0",
             "Grade": 15.0,
-            "%": "83.33333333333334%"
+            "%": "93.75%"
         },
         {
             "Name": "Luke Cai",
-            "Knowledge": "nan",
-            "Thinking": "nan",
-            "Communication": "nan",
-            "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Knowledge": "2",
+            "Thinking": "3",
+            "Communication": "3",
+            "Application": "3",
+            "Grade": 11.0,
+            "%": "68.75%"
         },
         {
             "Name": "Katty Chen",
@@ -34,16 +34,16 @@
             "Communication": "4.0",
             "Application": "4.0",
             "Grade": 16.0,
-            "%": "88.88888888888889%"
+            "%": "100.0%"
         },
         {
             "Name": "Joshua Cheng",
-            "Knowledge": "nan",
+            "Knowledge": "3",
             "Thinking": "nan",
             "Communication": "nan",
             "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Grade": 3.0,
+            "%": "18.75%"
         },
         {
             "Name": "Marco Cheung",
@@ -51,8 +51,8 @@
             "Thinking": "nan",
             "Communication": "nan",
             "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Grade": 0.0,
+            "%": "0.0%"
         },
         {
             "Name": "Martin Cheung",
@@ -60,8 +60,8 @@
             "Thinking": "nan",
             "Communication": "nan",
             "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Grade": 0.0,
+            "%": "0.0%"
         },
         {
             "Name": "Marcus Chiu",
@@ -70,7 +70,7 @@
             "Communication": "4.0",
             "Application": "4.0",
             "Grade": 15.0,
-            "%": "83.33333333333334%"
+            "%": "93.75%"
         },
         {
             "Name": "Yixin Dong",
@@ -78,8 +78,8 @@
             "Thinking": "nan",
             "Communication": "nan",
             "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Grade": 0.0,
+            "%": "0.0%"
         },
         {
             "Name": "Elvin Feng",
@@ -87,8 +87,8 @@
             "Thinking": "nan",
             "Communication": "nan",
             "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Grade": 0.0,
+            "%": "0.0%"
         },
         {
             "Name": "Candice Lee",
@@ -97,7 +97,7 @@
             "Communication": "4.0",
             "Application": "4.0",
             "Grade": 16.0,
-            "%": "88.88888888888889%"
+            "%": "100.0%"
         },
         {
             "Name": "Hayley Liang",
@@ -105,8 +105,8 @@
             "Thinking": "nan",
             "Communication": "nan",
             "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Grade": 0.0,
+            "%": "0.0%"
         },
         {
             "Name": "Aiden Lin",
@@ -115,7 +115,7 @@
             "Communication": "4.0",
             "Application": "4.0",
             "Grade": 15.0,
-            "%": "83.33333333333334%"
+            "%": "93.75%"
         },
         {
             "Name": "Jolie Liu",
@@ -123,8 +123,8 @@
             "Thinking": "nan",
             "Communication": "nan",
             "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Grade": 0.0,
+            "%": "0.0%"
         },
         {
             "Name": "Antheia Lu",
@@ -133,7 +133,7 @@
             "Communication": "4.0",
             "Application": "4.0",
             "Grade": 16.0,
-            "%": "88.88888888888889%"
+            "%": "100.0%"
         },
         {
             "Name": "Alexis Popovitch",
@@ -141,8 +141,8 @@
             "Thinking": "nan",
             "Communication": "nan",
             "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Grade": 0.0,
+            "%": "0.0%"
         },
         {
             "Name": "Lucas Wang",
@@ -150,8 +150,8 @@
             "Thinking": "nan",
             "Communication": "nan",
             "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Grade": 0.0,
+            "%": "0.0%"
         },
         {
             "Name": "Jackson Wen",
@@ -159,8 +159,8 @@
             "Thinking": "nan",
             "Communication": "nan",
             "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Grade": 0.0,
+            "%": "0.0%"
         },
         {
             "Name": "Priscilla Wong",
@@ -168,8 +168,8 @@
             "Thinking": "nan",
             "Communication": "nan",
             "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Grade": 0.0,
+            "%": "0.0%"
         },
         {
             "Name": "Paris Yi",
@@ -177,8 +177,8 @@
             "Thinking": "nan",
             "Communication": "nan",
             "Application": "nan",
-            "Grade": null,
-            "%": ""
+            "Grade": 0.0,
+            "%": "0.0%"
         },
         {
             "Name": "Priscilla Zhu",
@@ -187,7 +187,198 @@
             "Communication": "4.0",
             "Application": "4.0",
             "Grade": 16.0,
-            "%": "88.88888888888889%"
+            "%": "100.0%"
+        }
+    ],
+    "Test Assessment (5)": [
+        {
+            "Name": "Ariana Ajan",
+            "Knowledge": 4.0,
+            "Thinking": 4.0,
+            "Communication": 4.0,
+            "Application": 4.0,
+            "Grade": 16.0,
+            "%": "100.0%"
+        },
+        {
+            "Name": "Ayaz Aravinthan",
+            "Knowledge": 4.0,
+            "Thinking": 3.0,
+            "Communication": 4.0,
+            "Application": 4.0,
+            "Grade": 15.0,
+            "%": "93.75%"
+        },
+        {
+            "Name": "Luke Cai",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Katty Chen",
+            "Knowledge": 4.0,
+            "Thinking": 4.0,
+            "Communication": 4.0,
+            "Application": 4.0,
+            "Grade": 16.0,
+            "%": "100.0%"
+        },
+        {
+            "Name": "Joshua Cheng",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Marco Cheung",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Martin Cheung",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Marcus Chiu",
+            "Knowledge": 4.0,
+            "Thinking": 3.0,
+            "Communication": 4.0,
+            "Application": 4.0,
+            "Grade": 15.0,
+            "%": "93.75%"
+        },
+        {
+            "Name": "Yixin Dong",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Elvin Feng",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Candice Lee",
+            "Knowledge": 4.0,
+            "Thinking": 4.0,
+            "Communication": 4.0,
+            "Application": 4.0,
+            "Grade": 16.0,
+            "%": "100.0%"
+        },
+        {
+            "Name": "Hayley Liang",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Aiden Lin",
+            "Knowledge": 4.0,
+            "Thinking": 3.0,
+            "Communication": 4.0,
+            "Application": 4.0,
+            "Grade": 15.0,
+            "%": "93.75%"
+        },
+        {
+            "Name": "Jolie Liu",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Antheia Lu",
+            "Knowledge": 4.0,
+            "Thinking": 4.0,
+            "Communication": 4.0,
+            "Application": 4.0,
+            "Grade": 16.0,
+            "%": "100.0%"
+        },
+        {
+            "Name": "Alexis Popovitch",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Lucas Wang",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Jackson Wen",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Priscilla Wong",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Paris Yi",
+            "Knowledge": null,
+            "Thinking": null,
+            "Communication": null,
+            "Application": null,
+            "Grade": 0.0,
+            "%": "0.0%"
+        },
+        {
+            "Name": "Priscilla Zhu",
+            "Knowledge": 4.0,
+            "Thinking": 4.0,
+            "Communication": 4.0,
+            "Application": 4.0,
+            "Grade": 16.0,
+            "%": "100.0%"
         }
     ]
 }

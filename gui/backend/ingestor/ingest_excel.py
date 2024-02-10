@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 
+from gui.backend.calculator.assessment_calculator import AssessmentCalculator
 from gui.backend.objects.assessments.Assessments import Assessments
 from gui.backend.objects.students.course import Course
 from settings import INGESTION_PATH
@@ -17,6 +18,6 @@ class IngestExcel:
         for file in filenames:
             df = pd.read_excel(f'{self.path}/{file}')
             title = file.replace('.xlsx', '')
-            course.validate_students_from_df(df)
-            assessment.validate_assessment_from_excel({"title": title, "df":df})
+            course.validate_students_from_excel(df)
+            assessment.validate_assessment_from_excel({"title": title, "df": df})
 

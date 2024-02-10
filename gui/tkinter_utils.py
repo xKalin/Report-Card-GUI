@@ -5,9 +5,10 @@ from tkinter import filedialog
 import customtkinter as ctk
 import pandas as pd
 
+from gui.backend.calculator.assessment_calculator import AssessmentCalculator
 from gui.backend.ingestor.ingest_excel import IngestExcel
 from gui.backend.objects.assessments.Assessments import Assessments
-from settings import INGESTION_PATH, SHEETS_PATH, ASSESSMENTS_PROPERTIES_PATH
+from settings import INGESTION_PATH, SHEETS_PATH, ASSESSMENTS_PROPERTIES_PATH, KTCA
 
 excel_path = SHEETS_PATH
 json_assessment_path = ASSESSMENTS_PROPERTIES_PATH
@@ -65,6 +66,9 @@ def save_data(frame, old_name, new_data):
 
         df = update_assessment(old_name, new_name, new_data['df'], assessment)
         properties = update_property(old_name, new_name, new_data['properties'], assessment)
+        print(properties)
+        print(properties)
+        df, properties = AssessmentCalculator(new_name, properties).calculate(df)
         assessment.validate_assessment_from_data_dict({'title': new_name, 'df': df, 'properties': properties})
         popup.destroy()
         popup.update()
@@ -91,12 +95,12 @@ def get_df_from_new_data(data):
 
 
 def get_json_from_new_data(json_dict):
-    list = ["Knowledge", 'Thinking', 'Application', "Communication"]
+    ktca_list = KTCA
     new_total = 0
     for ktcaw in json_dict:
         value = json_dict[ktcaw].get()
         json_dict[ktcaw] = value
-        if ktcaw in list:
+        if ktcaw in ktca_list:
             new_total += float(value)
     json_dict['Total'] = new_total
     return json_dict
@@ -107,3 +111,14 @@ def str_get(cell):
         return cell.get()
     except Exception as e:
         return cell
+
+
+def validate_new_assessment(new_name):
+    names = Assessments().get_assessment_names()
+    if new_name == "":
+        ctypes.windll.user32.MessageBoxW(0, f"Assessment Cannot be Blank", "Error!", 1)
+        return False
+    if new_name in names:
+        ctypes.windll.user32.MessageBoxW(0, f"Assessment Already Exist", "Error!", 1)
+        return False
+    return True
