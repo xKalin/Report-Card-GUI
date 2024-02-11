@@ -1,0 +1,24 @@
+{
+  "example_student": {
+    "History": {
+      "Final Grade": 0,
+      "Comments": "",
+      "Assessments": {
+        "Test1": {
+          "Grade": "0",
+          "Weight": "EQUAL"
+        }
+      }
+    },
+    "Geography": {
+      "Final Grade": 0,
+      "Comments": "",
+      "Assessments": {
+        "Test1": {
+          "Grade": "0",
+          "Weight": "EQUAL"
+        }
+      }
+    }
+  }
+}

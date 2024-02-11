@@ -3,7 +3,7 @@ import math
 
 import pandas as pd
 
-from settings import ASSESSMENTS_PROPERTIES_PATH, KTCA
+from settings import ASSESSMENTS_JSON_PROPERTIES_PATH, KTCA
 
 
 class AssessmentCalculator:
@@ -18,7 +18,7 @@ class AssessmentCalculator:
         return df, self._properties
 
     def get_properties(self):
-        path = ASSESSMENTS_PROPERTIES_PATH
+        path = ASSESSMENTS_JSON_PROPERTIES_PATH
         with open(path) as f:
             data = json.load(f)
         return data[self.name]
@@ -48,4 +48,6 @@ class AssessmentCalculator:
         average = str(float(grade)/self.total * 100)
         if average == 'nan':
             return ''
+        if float(average) > 100:
+            return '100%'
         return average + '%'

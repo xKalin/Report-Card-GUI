@@ -7,14 +7,26 @@ import pandas as pd
 
 from gui.backend.calculator.assessment_calculator import AssessmentCalculator
 from gui.backend.ingestor.ingest_excel import IngestExcel
-from gui.backend.objects.assessments.Assessments import Assessments
-from settings import INGESTION_PATH, SHEETS_PATH, ASSESSMENTS_PROPERTIES_PATH, KTCA
+from gui.backend.objects.assessments import Assessments
+from settings import INGESTION_PATH, SHEETS_PATH, ASSESSMENTS_JSON_PROPERTIES_PATH, KTCA
 
 excel_path = SHEETS_PATH
-json_assessment_path = ASSESSMENTS_PROPERTIES_PATH
+json_assessment_path = ASSESSMENTS_JSON_PROPERTIES_PATH
 
 
-def load_file():
+def previous_button(self, page):
+    print(page)
+    if page == 0:
+        return
+
+
+def next_page(self, page, assessments):
+    per_page = 5
+    if per_page * page < len(assessments) <= per_page * page + per_page:
+        pass
+
+
+def load_file(self):
     filepaths = filedialog.askopenfilenames()
     for file in filepaths:
         try:
@@ -25,7 +37,9 @@ def load_file():
         except Exception as e:
             ctypes.windll.user32.MessageBoxW(0, f"{str(e)}: Report to Allen!", "Error!", 1)
 
-    IngestExcel().ingest()
+    IngestExcel(self).ingest()
+    self.show_home()
+    self.load_assessment_scrollbar()
 
 
 def reset_main_frame(self):
@@ -61,13 +75,11 @@ def save_data(frame, old_name, new_data):
 
     def save():
         new_name = new_data['Assessment'].get()
-        # Assessment.json
+        # Assessment.course.json
         assessment = Assessments()
 
         df = update_assessment(old_name, new_name, new_data['df'], assessment)
         properties = update_property(old_name, new_name, new_data['properties'], assessment)
-        print(properties)
-        print(properties)
         df, properties = AssessmentCalculator(new_name, properties).calculate(df)
         assessment.validate_assessment_from_data_dict({'title': new_name, 'df': df, 'properties': properties})
         popup.destroy()

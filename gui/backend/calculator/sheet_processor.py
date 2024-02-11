@@ -1,3 +1,0 @@
-
-class SheetProcessor:
-    pass

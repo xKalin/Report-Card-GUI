@@ -7,13 +7,13 @@ import customtkinter as ctk
 
 
 def assessment_view(self, assessment_name):
-    loader = JSONLoader(assessment_name)
+    loader = JSONLoader(self, assessment_name)
     grade_df = loader.get_assessment_df()
     prop = loader.get_assessment_properties()
 
     # Building df frame
     # Setting columns for [Name, K, T, C A, G, %, Total (Weight, KT, CT, CC, AA)]
-    self.main_frame.grid_columnconfigure((1, 2, 3, 4, 5, 6, 7, 8), weight=1, uniform="equal")
+    self.main_frame.grid_columnconfigure((1, 2, 3, 4, 5, 6, 7), weight=1, uniform="equal")
     new_data = {}
     # Title bar
     label = ctk.CTkLabel(self.main_frame, text="Assessment : ", font=ctk.CTkFont(size=14, weight="bold"))
@@ -27,7 +27,7 @@ def assessment_view(self, assessment_name):
                                 command=(lambda frame=self:
                                          save_data(frame, assessment_name, new_data)))
 
-    save_button.grid(row=0, column=8)
+    save_button.grid(row=0, column=8, padx=10, pady=10)
 
     # Body
     records = []
@@ -83,8 +83,8 @@ def assessment_view(self, assessment_name):
         records.append(row_data)
 
     row_index = 2
-    json_new_data = {}
-    new_data["properties"] = json_new_data
+    properties = {}
+    new_data["properties"] = properties
     for text, val in prop.items():
         label = ctk.CTkLabel(self.main_frame, text=text, font=ctk.CTkFont(size=12, weight="bold"))
         label.grid(row=row_index, column=7, padx=20, pady=(20, 10))
@@ -95,14 +95,14 @@ def assessment_view(self, assessment_name):
             value.insert("0.0", val)
             value.grid(row=row_index, column=8, padx=0, pady=8)
             value.configure(state='disable')
-            json_new_data[text] = string
+            properties[text] = string
             row_index += 1
             continue
 
         string = StringVar(self.main_frame, value=val)
         value = ctk.CTkEntry(self.main_frame, textvariable=string, width=80)
         value.grid(row=row_index, column=8, padx=0, pady=8)
-        json_new_data[text] = string
+        properties[text] = string
         row_index += 1
 
 
