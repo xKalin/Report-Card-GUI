@@ -1,27 +1,28 @@
-import settings
 import json
 
+import settings
 from gui.backend.calculator.final_grade_calculator import FinalGradeCalculator
 from gui.backend.objects.assessments import Assessments
 from gui.backend.objects.student import Students
-from gui.popup import init_course_popup
 
 student_json_path = settings.STUDENTS_JSON_PATH
-course_json_path = settings.COURSE_JSON_PATH
 
 
 class Course:
     def __init__(self):
-        self.course = self.__load_course()
-        self.selected_course = self.get_subject()
         self.students = self.__load_students()
-        self.Assessment = Assessments(self.selected_course)
+        self.Assessment = Assessments()
+        self.subject = self.get_default_subject()
+        self.Assessment_list, self.Properties_list = self.Assessment.get_assessments(self.subject)
 
     @staticmethod
     def __load_students():
         with open(student_json_path) as f:
             data = json.load(f)
         return data
+
+    def get_students(self):
+        return self.students[self.subject]
 
     def save_students_json(self):
         with open(student_json_path, "w") as f:
@@ -37,32 +38,40 @@ class Course:
         return True if name in self.students else False
 
     def __enroll(self, new_students):
-        Students().add_students(self.students, new_students)
+        Students().add_students(self.students[self.subject], new_students)
 
     def calculate_final_grade(self):
         final_cal = FinalGradeCalculator(self.Assessment.assessments, self.Assessment.assessments_property)
-        for student in self.students.keys():
-            student_data = self.students[student]
+        student_roster = self.students[self.subject]
+        for student in student_roster.keys():
+            student_data = student_roster[student]
             final_grade, assessments = final_cal.calculate(student)
             student_data['Final Grade'] = final_grade
             student_data['Assessments'] = assessments
         self.save_students_json()
 
-    @staticmethod
-    def __load_course():
-        with open(course_json_path) as f:
-            data = json.load(f)
-        return data
-
-    def save_course_json(self):
-        with open(course_json_path, "w") as f:
-            json.dump(self.course, fp=f, ensure_ascii=False, indent=4)
-
-    def get_subject(self):
-        courses = self.course['Courses']
-        if len(courses) == 0:
-            init_course_popup(self)
-        return courses[0]
+    def get_default_subject(self):
+        default_subject = self.Assessment.assessments_json.keys()
+        if len(default_subject) == 0:
+            self.new_course('Language')
+            return 'Language'
+        return list(default_subject)[0]
 
     def select_subject(self, subject):
-        self.selected_course = subject
+        self.subject = subject
+        self.Assessment_list, self.Properties_list = self.Assessment.get_assessments(self.subject)
+
+    def new_course(self, subject):
+        self.Assessment.assessments_json[subject] = {}
+        self.Assessment.assessments_property_json[subject] = {}
+        self.Assessment.save_assessments_json()
+        self.students[subject] = {}
+        self.save_students_json()
+        self.select_subject(subject)
+
+    def delete_course(self, subject):
+        del self.Assessment.assessments_json[subject]
+        del self.Assessment.assessments_property_json[subject]
+        self.Assessment.save_assessments_json()
+        del self.students[subject]
+        self.save_students_json()

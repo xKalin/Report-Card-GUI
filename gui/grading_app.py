@@ -2,7 +2,7 @@ from gui.assessment_view import assessment_view
 from gui.backend.objects.course import Course
 from gui.home_view import home_view
 from gui.new_assessment_view import new_assessment_view
-from gui.popup import new_assessment_popup
+from gui.popup import course_view_popup
 from gui.tkinter_utils import *
 
 ctk.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
@@ -15,7 +15,7 @@ class GradingApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         # configure window
-        self.title("Evi's Grading App")
+        self.title("Grading App")
         self.geometry(f"{x}x{y}")
 
         # configure grid layout
@@ -66,7 +66,7 @@ class GradingApp(ctk.CTk):
         home_button.grid(row=1, column=0, pady=8)
 
         course_select = ctk.CTkButton(self.sidebar_frame, text='Course',
-                                      command=lambda frame=self: new_assessment_popup(frame))
+                                      command=lambda app=self: course_view_popup(app))
         course_select.grid(row=2, column=0, pady=8)
         self.load_assessment_scrollbar()
 
@@ -74,14 +74,14 @@ class GradingApp(ctk.CTk):
         excel_button.grid(row=6, column=0, pady=8)
 
     def load_assessment_scrollbar(self):
-        selected_course = self.Course.selected_course
+        selected_course = self.Course.subject
 
         if self.assessments_scrollbar is not None:
             self.assessments_scrollbar.destroy()
         self.assessments_scrollbar = ctk.CTkScrollableFrame(self.sidebar_frame, height=350, label_text=selected_course)
         self.assessments_scrollbar.grid(row=3, column=0, padx=20, pady=5)
 
-        assessments = self.Course.Assessment.assessments
+        assessments = self.Course.Assessment_list
         i = 0
         for assessment in assessments:
             assessment_button = ctk.CTkButton(master=self.assessments_scrollbar, text=assessment,

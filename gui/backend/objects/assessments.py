@@ -5,11 +5,19 @@ from settings import ASSESSMENTS_JSON_PATH, ASSESSMENTS_JSON_PROPERTIES_PATH
 
 
 class Assessments:
-    def __init__(self, subject):
+    def __init__(self):
         self._assessment_path = ASSESSMENTS_JSON_PATH
         self._prop_path = ASSESSMENTS_JSON_PROPERTIES_PATH
+        self.assessments_json, self.assessments_property_json = self._from_json()
+        self.assessments = None
+        self.assessments_property = None
+        self.subject = None
+
+    def get_assessments(self, subject):
         self.subject = subject
-        self.assessments, self.assessments_property = self._from_json()
+        self.assessments = self.assessments_json[subject]
+        self.assessments_property = self.assessments_property_json[subject]
+        return self.assessments, self.assessments_property
 
     def delete_assessment(self, assessment_name):
         del self.assessments[assessment_name]
@@ -33,19 +41,21 @@ class Assessments:
 
     def save_assessments_json(self):
         with open(self._assessment_path, "w") as f:
-            json.dump(self.assessments, fp=f, ensure_ascii=False, indent=4)
+            json.dump(self.assessments_json, fp=f, ensure_ascii=False, indent=4)
         with open(self._prop_path, "w") as f:
-            json.dump(self.assessments_property, fp=f, ensure_ascii=False, indent=4)
+            json.dump(self.assessments_property_json, fp=f, ensure_ascii=False, indent=4)
 
     def get_assessment_names(self):
+        if self.assessments is None:
+            return None
         return self.assessments.keys()
 
     def _from_json(self):
         with open(self._assessment_path) as f:
-            assessments = json.load(f)
+            assessments_json = json.load(f)
         with open(self._prop_path) as f:
-            properties = json.load(f)
-        return assessments[self.subject], properties[self.subject]
+            properties_json = json.load(f)
+        return assessments_json, properties_json
 
     @staticmethod
     def get_assessment_columns():

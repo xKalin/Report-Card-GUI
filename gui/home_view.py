@@ -46,7 +46,7 @@ def home_view(self, page=0):
     label.grid(row=1, column=column_index, padx=20, pady=(20, 10))
     column_index += 1
 
-    student_json = course.students
+    student_json = course.get_students()
     row_index = 2
     for student, student_data in student_json.items():
         student_button = ctk.CTkButton(self.main_frame, text=student, width=120,

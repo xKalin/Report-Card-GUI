@@ -1,6 +1,6 @@
 import ctypes
 import shutil
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 
 import customtkinter as ctk
 import pandas as pd
@@ -76,7 +76,7 @@ def save_data(frame, old_name, new_data):
     def save():
         new_name = new_data['Assessment'].get()
         # Assessment.course.json
-        assessment = Assessments()
+        assessment = frame.Course.Assessment
 
         df = update_assessment(old_name, new_name, new_data['df'], assessment)
         properties = update_property(old_name, new_name, new_data['properties'], assessment)
@@ -128,9 +128,12 @@ def str_get(cell):
 def validate_new_assessment(new_name):
     names = Assessments().get_assessment_names()
     if new_name == "":
-        ctypes.windll.user32.MessageBoxW(0, f"Assessment Cannot be Blank", "Error!", 1)
+        messagebox.showwarning('Python Error', 'Assessment Cannot be Blank')
         return False
-    if new_name in names:
-        ctypes.windll.user32.MessageBoxW(0, f"Assessment Already Exist", "Error!", 1)
-        return False
+    if names:
+        if new_name in names:
+            messagebox.showwarning('Python Error', 'Assessment Cannot be Blank')
+            return False
     return True
+
+
