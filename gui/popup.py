@@ -3,8 +3,7 @@ from tkinter import *
 import customtkinter as ctk
 from CTkListbox import CTkListbox
 
-from gui.backend.objects.assessments import Assessments
-from gui.tkinter_utils import validate_new_assessment
+from gui.tkinter_utils import validate_new_assessment, validate_new_student
 
 
 def close(popup):
@@ -23,7 +22,7 @@ def new_assessment_popup(self):
     def open_new_assessment_view(val):
         close(popup)
         name = val.get()
-        if validate_new_assessment(name):
+        if validate_new_assessment(self, name):
             self.load_new_assessment_view(name)
         else:
             new_assessment_popup(self)
@@ -47,12 +46,12 @@ def delete_assessment_popup(self):
     def delete_selected_assessments():
         close(popup)
         for name in listbox.get():
-            Assessments().delete_assessment(name)
+            self.Course.Assessment.delete_assessment(name)
         self.show_home()
         self.load_assessment_scrollbar()
 
     listbox = CTkListbox(popup, multiple_selection=True)
-    assessments = self.Course.Assessments.get_assessment_names()
+    assessments = self.Course.Assessment.assessments.keys()
     for index, assessment in enumerate(assessments):
         listbox.insert(index, assessment)
     listbox.pack(pady=25)
@@ -86,6 +85,7 @@ def course_view_popup(self):
             return
         self.Course.select_subject(selected)
         self.show_home()
+        close(popup)
 
     ctk.CTkButton(right_frame, text='Select', command=lambda app=self: select(app)).pack(pady=(70, 0), padx=20)
 
@@ -137,4 +137,54 @@ def new_course_popup(self, parent):
     ctk.CTkLabel(popup, textvariable=error_txt).pack()
 
     ctk.CTkButton(popup, text='Submit', command=lambda val=text: new_subject(val, error_txt)).pack()
+    ctk.CTkButton(popup, text='Cancel', command=lambda frame=popup: close(popup)).pack(pady=15)
+
+
+def add_student_popup(self):
+    popup = ctk.CTkToplevel(self)
+    popup.attributes('-topmost', 'true')
+    popup.geometry(f"{500}x{250}")
+    popup.resizable(False, False)
+    self.eval(f'tk::PlaceWindow {str(popup)} center')
+    popup.title("New Student")
+
+    def open_new_student_view(val):
+        close(popup)
+        name = val.get()
+        if validate_new_student(self, name):
+            self.Course.validate_new_student(name)
+            self.show_home()
+        else:
+            add_student_popup(self)
+
+    ctk.CTkLabel(popup, text="New Student Name?",
+                 font=ctk.CTkFont(size=24, weight="bold")).pack(pady=15)
+    text = StringVar(popup, value="")
+    ctk.CTkEntry(popup, textvariable=text, width=180).pack(pady=15)
+    ctk.CTkButton(popup, text='Submit', command=lambda val=text: open_new_student_view(val)).pack()
+    ctk.CTkButton(popup, text='Cancel', command=lambda frame=popup: close(popup)).pack(pady=15)
+
+
+def delete_student_popup(self):
+    popup = ctk.CTkToplevel(self)
+    popup.attributes('-topmost', 'true')
+
+    popup.geometry(f"{300}x{500}")
+    popup.resizable(False, False)
+    self.eval(f'tk::PlaceWindow {str(popup)} center')
+    popup.title("Delete Students")
+
+    def delete_selected_students():
+        close(popup)
+        for name in listbox.get():
+            self.Course.delete_student(name)
+        self.show_home()
+
+    listbox = CTkListbox(popup, multiple_selection=True, height=300)
+    students = self.Course.get_students()
+    students = dict(sorted(students.items(), key=lambda val: val[0].split()[-1]))
+    for index, assessment in enumerate(students):
+        listbox.insert(index, assessment)
+    listbox.pack(pady=25)
+    ctk.CTkButton(popup, text='Delete', command=delete_selected_students).pack()
     ctk.CTkButton(popup, text='Cancel', command=lambda frame=popup: close(popup)).pack(pady=15)

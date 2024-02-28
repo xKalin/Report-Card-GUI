@@ -1,4 +1,5 @@
 import ctypes
+import math
 import shutil
 from tkinter import filedialog, messagebox
 
@@ -7,7 +8,7 @@ import pandas as pd
 
 from gui.backend.calculator.assessment_calculator import AssessmentCalculator
 from gui.backend.ingestor.ingest_excel import IngestExcel
-from gui.backend.objects.assessments import Assessments
+from gui.backend.objects.downloader import Downloader
 from settings import INGESTION_PATH, SHEETS_PATH, ASSESSMENTS_JSON_PROPERTIES_PATH, KTCA
 
 excel_path = SHEETS_PATH
@@ -15,22 +16,45 @@ json_assessment_path = ASSESSMENTS_JSON_PROPERTIES_PATH
 
 
 def previous_button(self, page):
-    print(page)
     if page == 0:
         return
+    return self.show_home(page - 1)
 
 
-def next_page(self, page, assessments):
+def next_button(self, page, length):
     per_page = 5
-    if per_page * page < len(assessments) <= per_page * page + per_page:
-        pass
+    max_page = math.ceil(length / per_page) - 1
+    if page < max_page:
+        return self.show_home(page + 1)
+    return
+
+
+def download_button(self):
+    data = self.Course.get_students()
+    df = pd.DataFrame(index=data.keys())
+    for student, grades in data.items():
+        df.loc[student, 'Final Grade'] = grades['Final Grade']
+        for assessment, grade in grades['Assessments'].items():
+            df.loc[student, assessment] = grade['Grade']
+    downloader = Downloader()
+    folder_selected = filedialog.askdirectory(initialdir=downloader.dst)
+    if folder_selected == '':
+        return
+    downloader.save(folder_selected)
+    download_path = f"{folder_selected}/{self.Course.subject}.xlsx"
+    df.to_excel(download_path)
 
 
 def load_file(self):
     filepaths = filedialog.askopenfilenames()
+    if len(filepaths) == 0:
+        return
     for file in filepaths:
         try:
             new_file = file.split('/')[-1]
+            if new_file.split('.')[-1] != 'xlsx':
+                ctypes.windll.user32.MessageBoxW(0, "Must be excel file.", "Error!", 1)
+                return
             shutil.copy(file, INGESTION_PATH + new_file)
         except shutil.SameFileError:
             ctypes.windll.user32.MessageBoxW(0, "Change the name of file.", "Error!", 1)
@@ -125,8 +149,8 @@ def str_get(cell):
         return cell
 
 
-def validate_new_assessment(new_name):
-    names = Assessments().get_assessment_names()
+def validate_new_assessment(self, new_name):
+    names = self.Course.Assessment.get_assessment_names()
     if new_name == "":
         messagebox.showwarning('Python Error', 'Assessment Cannot be Blank')
         return False
@@ -137,3 +161,16 @@ def validate_new_assessment(new_name):
     return True
 
 
+def validate_new_student(self, new_student):
+    names = self.Course.get_students()
+    if new_student == "":
+        messagebox.showwarning('Python Error', 'Student Cannot be Blank')
+        return False
+    if len(new_student.split()) < 2:
+        messagebox.showwarning('Python Error', 'Student has no last name')
+        return False
+    if names:
+        if new_student in names:
+            messagebox.showwarning('Python Error', 'Student Already Exists')
+            return False
+    return True

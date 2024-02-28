@@ -38,7 +38,9 @@ def new_assessment_view(self, assessment_name):
         label.grid(row=1, column=column_index, padx=20, pady=(20, 10))
         column_index += 1
 
-    students = course.students.keys()
+    students = course.students[course.subject].keys()
+    students = sorted(students, key=lambda x: x.split()[-1])
+    print(students)
     row_index = 3
     for student in students:
         row_data = {}

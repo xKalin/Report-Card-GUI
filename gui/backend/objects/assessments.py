@@ -6,12 +6,12 @@ from settings import ASSESSMENTS_JSON_PATH, ASSESSMENTS_JSON_PROPERTIES_PATH
 
 class Assessments:
     def __init__(self):
+        self.subject = None
         self._assessment_path = ASSESSMENTS_JSON_PATH
         self._prop_path = ASSESSMENTS_JSON_PROPERTIES_PATH
         self.assessments_json, self.assessments_property_json = self._from_json()
         self.assessments = None
         self.assessments_property = None
-        self.subject = None
 
     def get_assessments(self, subject):
         self.subject = subject
@@ -20,8 +20,8 @@ class Assessments:
         return self.assessments, self.assessments_property
 
     def delete_assessment(self, assessment_name):
-        del self.assessments[assessment_name]
-        del self.assessments_property[assessment_name]
+        del self.assessments_json[self.subject][assessment_name]
+        del self.assessments_property_json[self.subject][assessment_name]
         self.save_assessments_json()
 
     def validate_assessment_from_excel(self, data):
@@ -57,9 +57,25 @@ class Assessments:
             properties_json = json.load(f)
         return assessments_json, properties_json
 
+    def add_new_student(self, new_student):
+        for assessment in self.assessments:
+            self.assessments[assessment].append(self.get_default_student_values(new_student))
+
     @staticmethod
     def get_assessment_columns():
         return ["Names", "Knowledge", "Thinking", "Communication", "Application", "Grade", "%"]
+
+    @staticmethod
+    def get_default_student_values(new_student):
+        return {
+            "Name": new_student,
+            "Knowledge": 0,
+            "Thinking": 0,
+            "Communication": 0,
+            "Application": 0,
+            "Grade": 0.0,
+            "%": "0.0%"
+        }
 
     @staticmethod
     def get_default_properties():

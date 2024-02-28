@@ -1,5 +1,4 @@
 from tkinter import *
-from gui.backend.calculator.assessment_calculator import AssessmentCalculator
 from gui.backend.loader.json_loader import JSONLoader
 from gui.tkinter_utils import save_data
 
@@ -37,9 +36,9 @@ def assessment_view(self, assessment_name):
         label = ctk.CTkLabel(self.main_frame, text=column_name, font=ctk.CTkFont(size=12, weight="bold"))
         label.grid(row=1, column=column, padx=20, pady=(20, 10))
         column += 1
-
+    grade_df.sort_values(by='Name', key=lambda x: x.apply(lambda y: y.split()[-1]), inplace=True)
+    row = 2
     for index, data in grade_df.iterrows():
-        row = index + 2
         row_data = {}
 
         student_name = ctk.CTkTextbox(self.main_frame, height=20, width=120)
@@ -81,6 +80,7 @@ def assessment_view(self, assessment_name):
         row_data['%'] = data['%']
 
         records.append(row_data)
+        row += 1
 
     row_index = 2
     properties = {}
